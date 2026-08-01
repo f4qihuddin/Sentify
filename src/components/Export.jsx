@@ -46,7 +46,7 @@ function Export({ dataset }) {
                 (response) => {
                   if (!response.ok) {
                     throw new Error(
-                      `Gagal mengambil dataset: ${response.status}`,
+                      `Failed to fetch dataset: ${response.status}`,
                     );
                   }
 
@@ -114,11 +114,11 @@ function Export({ dataset }) {
   }, [totals]);
 
   if (isLoading) {
-    return <div>Memuat dataset...</div>;
+    return <div>Loading dataset...</div>;
   }
 
   if (error) {
-    return <div className="error-message">Gagal memuat dataset: {error}</div>;
+    return <div className="error-message">Failed to load dataset: {error}</div>;
   }
 
   const data = [
@@ -212,7 +212,7 @@ function Export({ dataset }) {
 
         if (imageHeight > availableHeight) {
           throw new Error(
-            "Salah satu bagian laporan lebih tinggi dari satu halaman A4.",
+            "One report section is taller than a single A4 page.",
           );
         }
 
@@ -237,8 +237,8 @@ function Export({ dataset }) {
 
       pdf.save("sentiment-analysis-report.pdf");
     } catch (exportError) {
-      console.error("Gagal membuat PDF:", exportError);
-      alert("PDF gagal dibuat. Silakan coba kembali.");
+      console.error("Failed to create PDF:", exportError);
+      alert("PDF creation failed. Please try again.");
     } finally {
       reportElement.style.height = previousStyles.height;
       reportElement.style.maxHeight = previousStyles.maxHeight;

@@ -1,7 +1,7 @@
 import Papa from "papaparse";
 
 export function convertCsvToInitialData(csvText) {
-  // Menghapus UTF-8 BOM jika terdapat di awal CSV
+  // Remove UTF-8 BOM if present at the start of the CSV
   const cleanedCsv = csvText.replace(/^\uFEFF/, "");
 
   const { data, errors } = Papa.parse(cleanedCsv, {
@@ -11,12 +11,14 @@ export function convertCsvToInitialData(csvText) {
   });
 
   if (errors.length > 0) {
-    console.warn("Peringatan saat membaca CSV:", errors);
+    console.warn("Warning while reading CSV:", errors);
   }
 
   const groupedByYear = data.reduce((result, row) => {
     const year = String(row.tahun || "").trim();
-    const label = String(row.label || "").trim().toLowerCase();
+    const label = String(row.label || "")
+      .trim()
+      .toLowerCase();
 
     if (!year || !["positive", "negative", "neutral"].includes(label)) {
       return result;
@@ -37,6 +39,6 @@ export function convertCsvToInitialData(csvText) {
   }, {});
 
   return Object.values(groupedByYear).sort(
-    (a, b) => Number(a.year) - Number(b.year)
+    (a, b) => Number(a.year) - Number(b.year),
   );
 }

@@ -86,10 +86,9 @@ function HistoricalAnalysis({ data = [] }) {
   }, [availableYears.length, firstAvailableYear, lastAvailableYear]);
 
   /*
-   * activeRange adalah rentang yang benar-benar digunakan
-   * oleh grafik.
+   * activeRange is the range actually used by the chart.
    *
-   * Jika belum ada filter pengguna, gunakan defaultRange.
+   * If the user has not applied a filter yet, use defaultRange.
    */
   const activeRange = useMemo(() => {
     if (!defaultRange) {
@@ -130,8 +129,7 @@ function HistoricalAnalysis({ data = [] }) {
   }, [chartData, activeRange]);
 
   /*
-   * Menghitung total sentimen hanya dari data yang sedang
-   * ditampilkan.
+   * Calculate total sentiment only from the data currently shown.
    */
   const aggregated = useMemo(() => {
     return filteredData.reduce(
@@ -152,7 +150,8 @@ function HistoricalAnalysis({ data = [] }) {
    * Format data untuk PieChart dan custom legend.
    */
   const aggregatedData = useMemo(() => {
-    const total = aggregated.positive + aggregated.negative + aggregated.neutral;
+    const total =
+      aggregated.positive + aggregated.negative + aggregated.neutral;
 
     return [
       {
@@ -174,8 +173,8 @@ function HistoricalAnalysis({ data = [] }) {
   }, [aggregated]);
 
   /*
-   * Membuka atau menutup dropdown.
-   * Saat dibuka, form diisi dengan rentang yang aktif.
+   * Open or close the dropdown.
+   * When opened, the form is populated with the active range.
    */
   function handleToggleFilter() {
     if (!isFilterOpen && activeRange) {
@@ -205,13 +204,13 @@ function HistoricalAnalysis({ data = [] }) {
   }
 
   /*
-   * Memvalidasi dan menerapkan filter.
+   * Validate and apply the filter.
    */
   function handleApplyFilter(event) {
     event.preventDefault();
 
     if (!defaultRange) {
-      setFilterError("Dataset tidak memiliki data tahun.");
+      setFilterError("Dataset has no year data.");
       return;
     }
 
@@ -220,29 +219,28 @@ function HistoricalAnalysis({ data = [] }) {
     const endYear = Number(draftRange.endYear);
 
     if (!Number.isInteger(startYear) || !Number.isInteger(endYear)) {
-      setFilterError("Tahun mulai dan tahun akhir harus diisi.");
+      setFilterError("Start year and end year must be provided.");
       return;
     }
 
     if (startYear > endYear) {
-      setFilterError("Tahun mulai tidak boleh melebihi tahun akhir.");
+      setFilterError("Start year cannot be greater than end year.");
       return;
     }
 
     /*
-     * Selisih maksimal 4 berarti maksimal lima tahun
-     * secara inklusif.
+     * A maximum difference of 4 means at most five years inclusive.
      *
-     * Contoh: 2022–2026 = lima tahun.
+     * Example: 2022–2026 = five years.
      */
     if (endYear - startYear > 4) {
-      setFilterError("Rentang maksimal adalah lima tahun.");
+      setFilterError("The maximum range is five years.");
       return;
     }
 
     if (startYear < firstAvailableYear || endYear > lastAvailableYear) {
       setFilterError(
-        `Tahun harus berada antara ${firstAvailableYear} dan ${lastAvailableYear}.`,
+        `Year must be between ${firstAvailableYear} and ${lastAvailableYear}.`,
       );
       return;
     }
@@ -261,7 +259,7 @@ function HistoricalAnalysis({ data = [] }) {
    */
   const rangeLabel = activeRange
     ? `${activeRange.startYear} - ${activeRange.endYear}`
-    : "Tidak ada data";
+    : "No data";
 
   return (
     <div className="historical-analysis">
@@ -311,9 +309,7 @@ function HistoricalAnalysis({ data = [] }) {
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <p className="historical-empty-text">
-            Tidak ada data dalam rentang tahun ini.
-          </p>
+          <p className="historical-empty-text">No data for this year range.</p>
         )}
 
         <div className="custom-legend">
@@ -347,7 +343,7 @@ function HistoricalAnalysis({ data = [] }) {
               type="button"
               className="year-filter-button"
               aria-label={
-                isFilterOpen ? "Tutup filter tahun" : "Buka filter tahun"
+                isFilterOpen ? "Close year filter" : "Open year filter"
               }
               aria-expanded={isFilterOpen}
               disabled={!activeRange}
@@ -420,7 +416,7 @@ function HistoricalAnalysis({ data = [] }) {
             </PieChart>
           </ResponsiveContainer>
         ) : (
-          <p className="historical-empty-text">Tidak ada data sentimen.</p>
+          <p className="historical-empty-text">No sentiment data available.</p>
         )}
 
         <div className="custom-legend">

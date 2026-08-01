@@ -16,7 +16,7 @@ function AnalyzeSentiment() {
     const review = input.trim();
 
     if (!review) {
-      setError("Masukkan review terlebih dahulu.");
+      setError("Please enter a review first.");
       return;
     }
 
@@ -41,17 +41,17 @@ function AnalyzeSentiment() {
 
       if (!response.ok) {
         throw new Error(
-          result.detail ?? `Request gagal dengan status ${response.status}`,
+          result.detail ?? `Request failed with status ${response.status}`,
         );
       }
 
       setPrediction(result);
     } catch (requestError) {
-      console.error("Prediksi gagal:", requestError);
+      console.error("Prediction failed:", requestError);
 
       if (requestError instanceof TypeError) {
         setError(
-          "Backend tidak dapat dihubungi. Pastikan container sedang berjalan.",
+          "Unable to reach the backend. Make sure the container is running.",
         );
       } else {
         setError(requestError.message);

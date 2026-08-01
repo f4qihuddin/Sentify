@@ -32,7 +32,7 @@ function Overview({ dataset }) {
                 (response) => {
                   if (!response.ok) {
                     throw new Error(
-                      `Gagal mengambil dataset: ${response.status}`
+                      `Failed to fetch dataset: ${response.status}`,
                     );
                   }
 
@@ -41,8 +41,7 @@ function Overview({ dataset }) {
               );
 
         // Mengubah data CSV ke format HistoricalAnalysis
-        const convertedData =
-          convertCsvToInitialData(csvText);
+        const convertedData = convertCsvToInitialData(csvText);
 
         setInitialData(convertedData);
       } catch (loadError) {
@@ -78,15 +77,12 @@ function Overview({ dataset }) {
         positive: 0,
         negative: 0,
         neutral: 0,
-      }
+      },
     );
   }, [initialData]);
 
   const percentages = useMemo(() => {
-    const totalReviews =
-      totals.positive +
-      totals.negative +
-      totals.neutral;
+    const totalReviews = totals.positive + totals.negative + totals.neutral;
 
     if (totalReviews === 0) {
       return {
@@ -97,25 +93,18 @@ function Overview({ dataset }) {
     }
 
     return {
-      positive:
-        (totals.positive / totalReviews) * 100,
-      negative:
-        (totals.negative / totalReviews) * 100,
-      neutral:
-        (totals.neutral / totalReviews) * 100,
+      positive: (totals.positive / totalReviews) * 100,
+      negative: (totals.negative / totalReviews) * 100,
+      neutral: (totals.neutral / totalReviews) * 100,
     };
   }, [totals]);
 
   if (isLoading) {
-    return <div>Memuat dataset...</div>;
+    return <div>Loading dataset...</div>;
   }
 
   if (error) {
-    return (
-      <div className="error-message">
-        Gagal memuat dataset: {error}
-      </div>
-    );
+    return <div className="error-message">Failed to load dataset: {error}</div>;
   }
 
   return (

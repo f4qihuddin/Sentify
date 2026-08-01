@@ -52,7 +52,7 @@ function groupChatHistory(rows) {
 }
 
 function formatDate(date) {
-  return new Intl.DateTimeFormat("id-ID", {
+  return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -152,11 +152,11 @@ function AskAI() {
         const response = await fetch(CHAT_HISTORY_API_URL);
 
         if (!response.ok) {
-          throw new Error(`Gagal membaca chat history: ${response.status}`);
+          throw new Error(`Failed to read chat history: ${response.status}`);
         }
 
         if (!response.ok) {
-          throw new Error(`Gagal membaca history: ${response.status}`);
+          throw new Error(`Failed to read history: ${response.status}`);
         }
 
         const rows = await response.json();
@@ -187,7 +187,7 @@ function AskAI() {
     event.preventDefault();
 
     const messageText = messageInput.trim();
-    const question = messageText || `File terlampir: ${selectedFile.name}`;
+    const question = messageText || `Attached file: ${selectedFile.name}`;
     setSessionTitle(messageText);
 
     if ((!messageText && !selectedFile) || isSending) {
@@ -208,7 +208,7 @@ function AskAI() {
           currentDateGroup?.sessions ?? [],
           activeSession.id,
         )
-      : activeSession?.name ?? question;
+      : (activeSession?.name ?? question);
     const sessionId = `${date}-${sessionName}`;
 
     const userMessage = {
@@ -253,7 +253,7 @@ function AskAI() {
 
       if (!response.ok) {
         throw new Error(
-          result.detail ?? `Request gagal dengan status ${response.status}`,
+          result.detail ?? `Request failed with status ${response.status}`,
         );
       }
 
@@ -317,9 +317,9 @@ function AskAI() {
 
       setActiveSessionId(sessionId);
     } catch (error) {
-      console.error("Ask AI gagal:", error);
+      console.error("Ask AI failed:", error);
 
-      setSendError(error.message || "Chatbot tidak dapat dihubungi.");
+      setSendError(error.message || "Chatbot cannot be reached.");
     } finally {
       setIsSending(false);
     }

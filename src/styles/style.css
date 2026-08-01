@@ -498,6 +498,9 @@ h3 {
 
 .action-button {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   background-color: #f1dac4;
   border: none;
   width: 40%;
