@@ -1,0 +1,14 @@
+.git
+.agents
+.codex
+node_modules
+dist
+outputs
+scratch
+tmp
+**/.venv
+**/__pycache__
+**/*.pyc
+.env
+src/model_api/.env
+src/model_api/.env.docker
