@@ -8,7 +8,7 @@
 
 1. Open terminal and run:
 ```bash
-npm create vite@latest nama-proyek -- --template react
+npm create vite@latest project-name -- --template react
 ```
 
 2. Follow the steps
@@ -17,7 +17,7 @@ npm create vite@latest nama-proyek -- --template react
 - You can start the instalation and run project automaticcally
 - or manually by:
 ```bash
-cd nama-of-your-project
+cd name-of-your-project
 npm install
 npm run dev
 ```
@@ -38,19 +38,19 @@ curl http://localhost:8000/health
 
 # App Features
 1. Data analysis dashboard
-![dashboard](public\sentify-dashboard.png)
+![dashboard](public/sentify-dashboard.png)
 
 2. File import
-![import](public\sentify-import.png)
+![import](public/sentify-import.png)
 
 3. Export data analysis to PDF
-![export](public\sentify-export.png)
+![export](public/sentify-export.png)
 
 4. Sentiment Classifier
-![analyze-sentiment](public\sentify-analyze-sentiment.png)
+![analyze-sentiment](public/sentify-analyze-sentiment.png)
 
 5. AI Based Chatbot
-![chatbot](public\sentify-chatbot.png)
+![chatbot](public/sentify-chatbot.png)
 
 # How the frontend and AI models interact?
-![flowchart](public\sentify-ai-flowchart.jpg)
+![flowchart](public/sentify-ai-flowchart.jpg)
